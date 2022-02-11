@@ -7,5 +7,3 @@ Features:
 - 2D sprite animation
 
 ![demo](demo.gif)
-
-More information can be found 
