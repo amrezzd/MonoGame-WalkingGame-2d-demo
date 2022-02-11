@@ -8,7 +8,7 @@ namespace WalkingGame
     {
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
-        private CharacterEntity _character;
+        private Character _character;
 
         public Game1()
         {
@@ -19,7 +19,7 @@ namespace WalkingGame
 
         protected override void Initialize()
         {
-            _character = new CharacterEntity(GraphicsDevice);
+            _character = new Character(GraphicsDevice);
 
             base.Initialize();
         }
