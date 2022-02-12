@@ -101,19 +101,19 @@ namespace WalkingGame
                 }
             }
 
-            _animator.Update(gameTime);
+            _animator.CurrentAnimation.Update(gameTime);
         }
 
         public void Draw(SpriteBatch spriteBatch)
         {
             spriteBatch.Draw(s_characterSheetTexture,
                new Rectangle(new Vector2(X, Y).ToPoint(), new Point(50, 50)),
-               _animator.Animation.SourceRectangle,
+               _animator.CurrentAnimation.SourceRectangle,
                Color.White);
         }
 
 
-        private class CharacterAnimator : Animator
+        private class CharacterAnimator : IAnimator
         {
 
             private Animation _walkLeft = new Animation(
@@ -156,7 +156,7 @@ namespace WalkingGame
                 _currentAnimation = _standDown;
             }
 
-            public override Animation Animation => _currentAnimation;
+            public Animation CurrentAnimation => _currentAnimation;
 
             public void OnStateChanged(CharacterState state)
             {
