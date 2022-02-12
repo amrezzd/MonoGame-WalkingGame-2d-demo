@@ -1,15 +1,21 @@
 ﻿using Microsoft.Xna.Framework;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+
 
 namespace WalkingGame
 {
     public class Animation
     {
-        private List<AnimationFrame> _frames = new List<AnimationFrame>();
-        private double _animationTime;
+        private readonly List<AnimationFrame> _frames = new List<AnimationFrame>();
+        private double _animationTimeFrame;
+
+        public Animation(params AnimationFrame[] frames)
+        {
+            foreach (var animationFrame in frames)
+            {
+                _frames.Add(animationFrame);
+            }
+        }
 
         public double Duration
         {
@@ -24,16 +30,21 @@ namespace WalkingGame
             }
         }
 
-        public Rectangle TextureRectangle
+        public Rectangle SourceRectangle
         {
             get
             {
+                if (_frames.Count == 0)
+                {
+                    return Rectangle.Empty;
+                }
+
                 AnimationFrame currentFrame = null;
                 double accumulatedTime = 0;
 
                 foreach (var frame in _frames)
                 {
-                    if (accumulatedTime + frame.Duration > _animationTime)
+                    if (accumulatedTime + frame.Duration > _animationTimeFrame)
                     {
                         currentFrame = frame;
                         break;
@@ -46,31 +57,21 @@ namespace WalkingGame
 
                 if (currentFrame == null)
                 {
-                    currentFrame = _frames.LastOrDefault();
-                }
-
-                if (currentFrame == null)
-                {
-                    return Rectangle.Empty;
+                    currentFrame = _frames[0];
                 }
 
                 return currentFrame.SourceRectangle;
             }
         }
 
-        public void AddFrame(Rectangle sourceRect, double duration)
-        {
-            _frames.Add(new AnimationFrame(sourceRect, duration));
-        }
-
         public void Update(GameTime gameTime)
         {
-            double secondsToAnimation = _animationTime + gameTime.ElapsedGameTime.TotalSeconds;
-            if (secondsToAnimation > Duration)
+            double timeFrame = _animationTimeFrame + gameTime.ElapsedGameTime.TotalSeconds;
+            if (timeFrame > Duration)
             {
-                secondsToAnimation = 0;
+                timeFrame = 0;
             }
-            _animationTime = secondsToAnimation;
+            _animationTimeFrame = timeFrame;
         }
     }
 }

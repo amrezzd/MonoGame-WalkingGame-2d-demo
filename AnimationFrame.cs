@@ -13,7 +13,7 @@ namespace WalkingGame
             this.Duration = Duration;
         }
 
-        public Rectangle SourceRectangle { get; set; }
-        public double Duration { get; set; }
+        public Rectangle SourceRectangle { get; private set; }
+        public double Duration { get; private set; }
     }
 }
